@@ -1,0 +1,316 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+
+        <title>Datos de la Persona</title>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style>
+            /* Estilos generales */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                padding: 40px 20px;
+                animation: fadeIn 0.5s ease-in;
+            }
+            
+            /* Animación de entrada */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Contenedor principal */
+            .container {
+                max-width: 600px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                overflow: hidden;
+                animation: slideUp 0.5s ease-out;
+            }
+            
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            /* Header del formulario */
+            .form-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 30px;
+                text-align: center;
+                position: relative;
+            }
+            
+            .form-header h1 {
+                color: white;
+                font-size: 2em;
+                margin: 0;
+                font-weight: 600;
+                text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            }
+            
+            .form-header p {
+                color: rgba(255,255,255,0.9);
+                margin-top: 10px;
+                font-size: 0.9em;
+            }
+            
+            /* Cuerpo del formulario */
+            .form-body {
+                padding: 40px;
+            }
+            
+            /* Grupos de formulario */
+            .form-group {
+                margin-bottom: 25px;
+                position: relative;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 8px;
+                color: #4a5568;
+                font-weight: 600;
+                font-size: 0.9em;
+                letter-spacing: 0.5px;
+            }
+            
+            .input-icon {
+                position: relative;
+            }
+            
+            input {
+                width: 100%;
+                padding: 12px 15px;
+                border: 2px solid #e2e8f0;
+                border-radius: 12px;
+                font-size: 1em;
+                transition: all 0.3s ease;
+                background: #f8fafc;
+                font-family: inherit;
+            }
+            
+            input:focus {
+                outline: none;
+                border-color: #667eea;
+                background: white;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            }
+            
+            /* Estilo para campos con error */
+            .form-group.has-error input {
+                border-color: #f44336;
+                background: #fff5f5;
+            }
+            
+            /* Mensaje de error */
+            .error-message {
+                color: #f44336;
+                font-size: 0.8em;
+                margin-top: 5px;
+                display: block;
+                font-weight: 500;
+            }
+            
+            /* Botón guardar */
+            .btn-guardar {
+                width: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 14px;
+                border: none;
+                border-radius: 12px;
+                font-size: 1.1em;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-top: 10px;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .btn-guardar:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            }
+            
+            .btn-guardar:active {
+                transform: translateY(0);
+            }
+            
+            /* Enlace regresar */
+            .back-link {
+                text-align: center;
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px solid #e2e8f0;
+            }
+            
+            .back-link a {
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                display: inline-block;
+            }
+            
+            .back-link a:hover {
+                color: #764ba2;
+                transform: translateX(-5px);
+            }
+            
+            /* Ocultar los <br> */
+            br {
+                display: none;
+            }
+            
+            /* Campo oculto */
+            input[type="hidden"] {
+                display: none;
+            }
+            
+            /* Responsive */
+            @media (max-width: 768px) {
+                body {
+                    padding: 20px 15px;
+                }
+                
+                .form-body {
+                    padding: 25px;
+                }
+                
+                .form-header {
+                    padding: 20px;
+                }
+                
+                .form-header h1 {
+                    font-size: 1.5em;
+                }
+                
+                input {
+                    padding: 10px 12px;
+                }
+            }
+            
+            /* Efecto de onda al hacer click */
+            .ripple {
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .ripple:after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                pointer-events: none;
+                background-image: radial-gradient(circle, #fff 10%, transparent 10%);
+                background-repeat: no-repeat;
+                background-position: 50%;
+                transform: scale(10);
+                opacity: 0;
+                transition: transform 0.5s, opacity 0.5s;
+            }
+            
+            .ripple:active:after {
+                transform: scale(0);
+                opacity: 0.3;
+                transition: 0s;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="form-header">
+                <h1>✨ Datos de la Persona ✨</h1>
+                <p th:text="${persona.idPersona == 0} ? '📝 Completa el formulario para registrar una nueva persona' : '✏️ Modifica los datos que deseas actualizar'">
+                    Completa el formulario
+                </p>
+            </div>
+            
+            <div class="form-body">
+                <form th:action="@{/guardar}" method="post" th:object="${persona}">
+                    
+                    <!-- Campo oculto para el ID -->
+                    <input type="hidden" th:field="*{idPersona}"/>
+                    
+                    <br/><br/>
+                    
+                    <!-- Campo NOMBRE con validación -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('nombre')} ? 'has-error' : ''">
+                        <label>📝 NOMBRE</label>
+                        <div class="input-icon">
+                            <input type="text" id="nombre" name="nombre" th:field="*{nombre}" 
+                                   placeholder="Ingresa tu nombre completo" autocomplete="off"/>
+                        </div>
+                        <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error-message"></span>
+                    </div>
+                    
+                    <!-- Campo APELLIDO con validación -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('apellido')} ? 'has-error' : ''">
+                        <label>👤 APELLIDO</label>
+                        <div class="input-icon">
+                            <input type="text" id="apellido" name="apellido" th:field="*{apellido}" 
+                                   placeholder="Ingresa tu apellido" autocomplete="off"/>
+                        </div>
+                        <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}" class="error-message"></span>
+                    </div>
+                    
+                    <!-- Campo EMAIL con validación -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error' : ''">
+                        <label>📧 EMAIL</label>
+                        <div class="input-icon">
+                            <input type="email" id="email" name="email" th:field="*{email}" 
+                                   placeholder="ejemplo@correo.com" autocomplete="off"/>
+                        </div>
+                        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></span>
+                    </div>
+                    
+                    <!-- Campo TELÉFONO con validación -->
+                    <div class="form-group" th:classappend="${#fields.hasErrors('telefono')} ? 'has-error' : ''">
+                        <label>📱 TELÉFONO</label>
+                        <div class="input-icon">
+                            <input type="tel" id="telefono" name="telefono" th:field="*{telefono}" 
+                                   placeholder="099 999 9999" autocomplete="off"/>
+                        </div>
+                        <span th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}" class="error-message"></span>
+                    </div>
+                    
+                    <button type="submit" class="btn-guardar ripple">💾 GUARDAR PERSONA</button>
+                </form>
+                
+                <div class="back-link">
+                    <a th:href="@{/}">← Regresar al inicio</a>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+</html>
