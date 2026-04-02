@@ -25,43 +25,13 @@ Desarrollado siguiendo buenas prácticas de arquitectura de software y patrones 
 ## 🏗️ Arquitectura del Proyecto
 
 El proyecto sigue una **arquitectura por capas (Layered Architecture)**:
-PrimerProject/
-│
-├── .mvn/                          # Wrapper de Maven
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── prueba/primerspring/PrimerProject/
-│   │   │       ├── Controlador.java              # REST Controller
-│   │   │       ├── PrimerProjectApplication.java # Clase principal
-│   │   │       │
-│   │   │       ├── dao/
-│   │   │       │   └── PersonaDao.java           # Repository JPA
-│   │   │       │
-│   │   │       ├── domain/
-│   │   │       │   └── Persona.java              # Entidad JPA
-│   │   │       │
-│   │   │       └── service/
-│   │   │           ├── PersonaService.java       # Interfaz de servicio
-│   │   │           └── PersonaServiceImpl.java   # Implementación
-│   │   │
-│   │   └── resources/
-│   │       ├── application.properties            # Configuración
-│   │       ├── static/                           # Recursos estáticos (CSS, JS)
-│   │       └── templates/                        # Plantillas HTML
-│   │           ├── index.html                    # Página principal
-│   │           └── modificar.html                # Formulario de edición
-│   │
-│   └── test/                        # Pruebas unitarias
-│
-├── target/                          # Código compilado (ignorado por Git)
-├── bd-scripts/                      # Scripts de base de datos
-│   └── BD_sistema_personas.sql      # Creación de BD y tablas
-│
-├── .gitignore                       # Archivos ignorados por Git
-├── pom.xml                          # Dependencias Maven
-└── nb-configuration.xml             # Configuración de NetBeans
 
+- **Controlador** (`Controlador.java`) → Recibe peticiones HTTP
+- **Servicio** (`service/`) → Lógica de negocio
+- **DAO** (`dao/`) → Acceso a datos
+- **Dominio** (`domain/`) → Entidades JPA
+
+**Flujo:** `HTTP → Controlador → Servicio → DAO → MySQL`
 
 ## 👨‍💻 Autor
 
